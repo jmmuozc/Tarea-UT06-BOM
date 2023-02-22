@@ -7,7 +7,7 @@ class videoSystemView {
     }
 
     #excecuteHandler(handler, handlerArguments, scrollElement, data, url, event){
-		handler(...handlerArguments);
+		handler(handlerArguments);
 		$(scrollElement).get(0).scrollIntoView();
 		history.pushState(data, null, url);
 		event.preventDefault();
@@ -366,83 +366,84 @@ class videoSystemView {
         for (let element of document.getElementsByClassName('init')) {
             element.addEventListener("click", (event) => {
               this.#excecuteHandler(handler,[],'body',{action:'init'},'#Inicio',event);
-                // handler();
+              // handler();
             });
-
+            
         }
     }
-
+    
     bindSeries(handler) {
         for (let element of document.getElementsByClassName('series')) {
             element.addEventListener("click", (event) => {
-                handler();
+                this.#excecuteHandler(handler,[],'body',{action:'showSeries'},'#Series',event);
             });
-
+            
         }
     }
-
+    
     bindMovies(handler) {
         for (let element of document.getElementsByClassName('movies')) {
             element.addEventListener("click", (event) => {
-                handler();
+                this.#excecuteHandler(handler,[],'body',{action:'showMovies'},'#Movies',event);
             });
-
+            
         }
     }
-
+    
     bindActors(handler) {
         for (let element of document.getElementsByClassName('actors')) {
             element.addEventListener("click", (event) => {
-                handler();
+                this.#excecuteHandler(handler,[],'body',{action:'showActors'},'#Actors',event);
             });
-
+            
         }
     }
-
-
+    
+    
     bindDirectors(handler) {
         for (let element of document.getElementsByClassName('directors')) {
             element.addEventListener("click", (event) => {
+                this.#excecuteHandler(handler,[],'body',{action:'showDirectors'},'#Directors',event);
                 handler();
             });
-
+            
         }
     }
-
-
+    
+    
     bindActorCard(handler) {
         for (let element of document.getElementsByClassName('person-Actores')) {
             element.addEventListener("click", (event) => {
-                handler(element.dataset.person);
+                this.#excecuteHandler(handler,element.dataset.person,'body',{action:'showActorCard'},'#ActorCard',event);
             });
-
+            
         }
     }
-
+    
     bindDirectorCard(handler) {
         for (let element of document.getElementsByClassName('person-Directores')) {
             element.addEventListener("click", (event) => {
-                handler(element.dataset.person);
+                this.#excecuteHandler(handler,element.dataset.person,'body',{action:'showDirectorCard'},'#DirectorCard',event);
             });
-
+            
         }
     }
-
-
+    
+    
     bindProductionCard(handler) {
         for (let element of document.getElementsByClassName('production-btn')) {
             element.addEventListener("click", (event) => {
-                handler(element.dataset.production);
+                this.#excecuteHandler(handler,element.dataset.production,'body',{action:'showProductionCard'},'#ProductionCard',event);
             });
-
+            
         }
     }
-
+    
     bindCategory(handler) {
         for (let element of document.getElementsByClassName('category')) {
-
+            
             element.addEventListener("click", (event) => {
-                handler(element.dataset.category);
+                this.#excecuteHandler(handler,element.dataset.category,'body',{action:'showCategory'},'#Category',event);
             });
 
         }

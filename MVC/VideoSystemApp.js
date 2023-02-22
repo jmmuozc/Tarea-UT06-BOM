@@ -20,6 +20,7 @@ const historyActions = {
 	showMovies: () => VideoSystemApp.handleMovies(),
 	showActors: () => VideoSystemApp.handleActors(),
 	showDirectors: () => VideoSystemApp.handleDirectors(),
+	showCategory: (event) => VideoSystemApp.handleCategory(event.state.category),
 	showActorCard: (event) => VideoSystemApp.handleActorCard(event.state.picture),
 	showDirectorCard: (event) => VideoSystemApp.handleDirectorCard(event.state.picture),
 	showProduction: (event) => VideoSystemApp.HandleProduction(event.state.title),
