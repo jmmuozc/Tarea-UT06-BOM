@@ -64,7 +64,7 @@ class videoSystemView {
             let categoryLink = document.createElement("li");
             categoryLink.classList.add("category");
             categoryLink.setAttribute("data-category", `${category.Name}`);
-            categoryLink.innerHTML = `<a class="dropdown-item" href="#">${category.Name}</a>`;
+            categoryLink.innerHTML = `<a class="dropdown-item" href="#Category">${category.Name}</a>`;
             categoriesUl.appendChild(categoryLink);
         }
     }
@@ -107,7 +107,7 @@ class videoSystemView {
             <img src='./media/producciones/${arrayProductions[rng].Image}' class="card-img-top" alt="${arrayProductions[rng].Image}" width=250 height=150/>
             <div class="card-body">
               <h5 class="card-title">${arrayProductions[rng].Title}</h5>
-              <a href="#" class="btn btn-primary production-btn" data-production='${arrayProductions[rng].Title}'>Ver</a>
+              <a href="#ProductionCard" class="btn btn-primary production-btn" data-production='${arrayProductions[rng].Title}'>Ver</a>
             </div>
           </div>`
 
@@ -146,7 +146,7 @@ class videoSystemView {
             <img src='./media/producciones/${arrayProductions[i].Image}' class="card-img-top" alt="${arrayProductions[i].Image}" width=250 height=150>
             <div class="card-body">
               <h5 class="card-title">${arrayProductions[i].Title}</h5>
-              <a href="#" class="btn btn-primary production-btn" data-production='${arrayProductions[i].Title}'>Ver</a>
+              <a href="#ProductionCard" class="btn btn-primary production-btn" data-production='${arrayProductions[i].Title}'>Ver</a>
             </div>
           </div>`
             productionsRow.appendChild(productionsColumn);
@@ -184,7 +184,7 @@ class videoSystemView {
             <img src='./media/producciones/${arrayProductions[i].Image}' class="card-img-top" alt="${arrayProductions[i].Image}" width=250 height=150/>
             <div class="card-body">
               <h5 class="card-title">${arrayProductions[i].Title}</h5>
-              <a href="#" class="btn btn-primary production-btn" data-production='${arrayProductions[i].Title}'>Ver</a>
+              <a href="#ProductionCard" class="btn btn-primary production-btn" data-production='${arrayProductions[i].Title}'>Ver</a>
             </div>
           </div>`
             productionRow.appendChild(productionColumn);
@@ -223,7 +223,7 @@ class videoSystemView {
             <img src='./media/personas/${arrayPerson[i].Picture}' class="card-img-top" alt="${arrayPerson[i].Picture}" width=250 height=250/>
             <div class="card-body">
             <h5 class="card-title">${arrayPerson[i].Name} ${arrayPerson[i].FirstLastName}</h5>
-            <a href="#" class="btn btn-primary person-${type}" data-person='${arrayPerson[i].Picture}'>Conocer</a>
+            <a href="#${type}card" class="btn btn-primary person-${type}" data-person='${arrayPerson[i].Picture}'>Conocer</a>
             </div>
           </div>`
             personRow.appendChild(personColumn);
@@ -280,7 +280,7 @@ class videoSystemView {
             <img src='./media/producciones/${arrayProductions[i].Image}' class="card-img-top" alt="${arrayProductions[i].Image}" width=250 height=150/>
             <div class="card-body">
               <h5 class="card-title">${arrayProductions[i].Title}</h5>
-              <a href="#" class="btn btn-primary production-btn" data-production='${arrayProductions[i].Title}'>Ver</a>
+              <a href="#ProductionCard" class="btn btn-primary production-btn" data-production='${arrayProductions[i].Title}'>Ver</a>
             </div>
           </div>`
             productionsRow.appendChild(productionsColumn);
@@ -341,7 +341,7 @@ class videoSystemView {
             <img src='./media/personas/${arrayActors[i].Picture}' class="card-img-top" alt="${arrayActors[i].Picture}" width=200 height=200/>
             <div class="card-body">
               <h5 class="card-title">${arrayActors[i].Name} ${arrayActors[i].FirstLastName}</h5>
-              <a href="#" class="btn btn-primary person-Actores" data-person='${arrayActors[i].Picture}'>Conocer</a>
+              <a href="#ActoresCard" class="btn btn-primary person-Actores" data-person='${arrayActors[i].Picture}'>Conocer</a>
             </div>
           </div>`
             CastRow.appendChild(actorsColumn);
@@ -353,7 +353,7 @@ class videoSystemView {
             <img src='./media/personas/${arrayDirectors[i].Picture}' class="card-img-top" alt="${arrayDirectors[i].Picture}" width=200 height=200/>
             <div class="card-body">
               <h5 class="card-title">${arrayDirectors[i].Name} ${arrayDirectors[i].FirstLastName}</h5>
-              <a href="#" class="btn btn-primary person-Directores" data-person='${arrayDirectors[i].Picture}'>Conocer</a>
+              <a href="#DirectoresCard" class="btn btn-primary person-Directores" data-person='${arrayDirectors[i].Picture}'>Conocer</a>
             </div>
           </div>`
             CastRow.appendChild(directorsColumn);
@@ -393,7 +393,7 @@ class videoSystemView {
     bindActors(handler) {
         for (let element of document.getElementsByClassName('actors')) {
             element.addEventListener("click", (event) => {
-                this.#excecuteHandler(handler,[],'body',{action:'showActors'},'#Actors',event);
+                this.#excecuteHandler(handler,[],'body',{action:'showActors'},'#Actores',event);
             });
             
         }
@@ -403,7 +403,7 @@ class videoSystemView {
     bindDirectors(handler) {
         for (let element of document.getElementsByClassName('directors')) {
             element.addEventListener("click", (event) => {
-                this.#excecuteHandler(handler,[],'body',{action:'showDirectors'},'#Directors',event);
+                this.#excecuteHandler(handler,[],'body',{action:'showDirectors'},'#Directores',event);
                 handler();
             });
             
@@ -414,7 +414,7 @@ class videoSystemView {
     bindActorCard(handler) {
         for (let element of document.getElementsByClassName('person-Actores')) {
             element.addEventListener("click", (event) => {
-                this.#excecuteHandler(handler,element.dataset.person,'body',{action:'showActorCard'},'#ActorCard',event);
+                this.#excecuteHandler(handler,element.dataset.person,'body',{action:'showActorCard',picture:element.dataset.person},'#ActoresCard',event);
             });
             
         }
@@ -423,7 +423,7 @@ class videoSystemView {
     bindDirectorCard(handler) {
         for (let element of document.getElementsByClassName('person-Directores')) {
             element.addEventListener("click", (event) => {
-                this.#excecuteHandler(handler,element.dataset.person,'body',{action:'showDirectorCard'},'#DirectorCard',event);
+                this.#excecuteHandler(handler,element.dataset.person,'body',{action:'showDirectorCard',picture:element.dataset.person},'#DirectoresCard',event);
             });
             
         }
@@ -433,7 +433,7 @@ class videoSystemView {
     bindProductionCard(handler) {
         for (let element of document.getElementsByClassName('production-btn')) {
             element.addEventListener("click", (event) => {
-                this.#excecuteHandler(handler,element.dataset.production,'body',{action:'showProductionCard'},'#ProductionCard',event);
+                this.#excecuteHandler(handler,element.dataset.production,'body',{action:'showProduction',title:element.dataset.production},'#ProductionCard',event);
             });
             
         }
@@ -443,7 +443,7 @@ class videoSystemView {
         for (let element of document.getElementsByClassName('category')) {
             
             element.addEventListener("click", (event) => {
-                this.#excecuteHandler(handler,element.dataset.category,'body',{action:'showCategory'},'#Category',event);
+                this.#excecuteHandler(handler,element.dataset.category,'body',{action:'showCategory', category:element.dataset.category},'#Category',event);
             });
 
         }
