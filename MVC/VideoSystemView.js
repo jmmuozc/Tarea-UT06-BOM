@@ -6,6 +6,14 @@ class videoSystemView {
         this.main = document.getElementsByTagName("main")[0];
     }
 
+    #excecuteHandler(handler, handlerArguments, scrollElement, data, url, event){
+		handler(...handlerArguments);
+		$(scrollElement).get(0).scrollIntoView();
+		history.pushState(data, null, url);
+		event.preventDefault();
+	}
+
+
     showCategories(categoriesList) {
 
 
@@ -357,7 +365,8 @@ class videoSystemView {
     bindInit(handler) {
         for (let element of document.getElementsByClassName('init')) {
             element.addEventListener("click", (event) => {
-                handler();
+              this.#excecuteHandler(handler,[],'body',{action:'init'},'#Inicio',event);
+                // handler();
             });
 
         }
@@ -421,15 +430,6 @@ class videoSystemView {
 
 
     bindProductionCard(handler) {
-        for (let element of document.getElementsByClassName('production-btn')) {
-            element.addEventListener("click", (event) => {
-                handler(element.dataset.production);
-            });
-
-        }
-    }
-
-    bindMovieCard(handler) {
         for (let element of document.getElementsByClassName('production-btn')) {
             element.addEventListener("click", (event) => {
                 handler(element.dataset.production);
