@@ -505,7 +505,6 @@ class videoSystemView {
               CastRow.appendChild(directorsColumn);
         }
 
-        console.log(production.Title);
         this.windows.set(production.Title,window);
     }
 
