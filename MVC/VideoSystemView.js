@@ -347,10 +347,10 @@ class videoSystemView {
             <img src='./media/producciones/${arrayProductions[i].Image}' class="card-img-top" alt="${arrayProductions[i].Image}" width=250 height=150/>
             <div class="card-body">
               <h5 class="card-title">${arrayProductions[i].Title}</h5>
-              <a href="#ProductionCard" class="btn btn-primary production-btn" data-production='${arrayProductions[i].Title}'>Ver</a>
-              <a href="#ProductionCard" class="btn btn-primary production-btn-window" data-production='${arrayProductions[i].Title}'>Ventana</a>
-            </div>
-          </div>`
+              </div>
+              </div>`
+              //   <a href="#ProductionCard" class="btn btn-primary production-btn" data-production='${arrayProductions[i].Title}'>Ver</a>
+              //   <a href="#ProductionCard" class="btn btn-primary production-btn-window" data-production='${arrayProductions[i].Title}'>Ventana</a>
             productionsRow.appendChild(productionsColumn);
         }
 
@@ -485,10 +485,10 @@ class videoSystemView {
             <img src='./media/personas/${arrayActors[i].Picture}' class="card-img-top" alt="${arrayActors[i].Picture}" width=200 height=200/>
             <div class="card-body">
               <h5 class="card-title">${arrayActors[i].Name} ${arrayActors[i].FirstLastName}</h5>
-              <a href="#ActoresCard" class="btn btn-primary person-Actores" data-person='${arrayActors[i].Picture}'>Conocer</a>
-              <a href="#ActoresCard" class="btn btn-primary person-Actores-window" data-person='${arrayActors[i].Picture}'>Ventana</a>
-            </div>
-          </div>`
+              </div>
+              </div>`
+            //   <a href="#ActoresCard" class="btn btn-primary person-Actores" data-person='${arrayActors[i].Picture}'>Conocer</a>
+            //   <a href="#ActoresCard" class="btn btn-primary person-Actores-window" data-person='${arrayActors[i].Picture}'>Ventana</a>
             CastRow.appendChild(actorsColumn);
         }
         for (let i = 0; i < arrayDirectors.length; i++) {
@@ -498,11 +498,11 @@ class videoSystemView {
             <img src='./media/personas/${arrayDirectors[i].Picture}' class="card-img-top" alt="${arrayDirectors[i].Picture}" width=200 height=200/>
             <div class="card-body">
               <h5 class="card-title">${arrayDirectors[i].Name} ${arrayDirectors[i].FirstLastName}</h5>
-              <a href="#DirectoresCard" class="btn btn-primary person-Directores" data-person='${arrayDirectors[i].Picture}'>Conocer</a>
-              <a href="#DirectoresCard" class="btn btn-primary person-Directores-window" data-person='${arrayDirectors[i].Picture}'>Ventana</a>
-            </div>
-          </div>`
-            CastRow.appendChild(directorsColumn);
+              </div>
+              </div>`
+            //   <a href="#DirectoresCard" class="btn btn-primary person-Directores" data-person='${arrayDirectors[i].Picture}'>Conocer</a>
+            //   <a href="#DirectoresCard" class="btn btn-primary person-Directores-window" data-person='${arrayDirectors[i].Picture}'>Ventana</a>
+              CastRow.appendChild(directorsColumn);
         }
 
         this.windows.push(window);
