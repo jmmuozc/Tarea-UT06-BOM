@@ -1,7 +1,7 @@
 "use strict";
 class videoSystemView {
 
-    windows=[];
+    windows=new Map();
 
     constructor() {
         // Recogemos el main
@@ -227,7 +227,7 @@ class videoSystemView {
             personColumn.innerHTML = `<div class="card mx-auto" style="width: 18rem; margin-top:2rem;">
             <img src='./media/personas/${arrayPerson[i].Picture}' class="card-img-top" alt="${arrayPerson[i].Picture}" width=250 height=250/>
             <div class="card-body">
-            <h5 class="card-title">${arrayPerson[i].Name} ${arrayPerson[i].FirstLastName}</h5>
+            <h5 class="card-title"><p>${type}</p>${arrayPerson[i].Name} ${arrayPerson[i].FirstLastName}</h5>
             <a href="#${type}card" class="btn btn-primary person-${type}" data-person='${arrayPerson[i].Picture}'>Conocer</a>
             <a href="#${type}card" class="btn btn-primary person-${type}-window" data-person='${arrayPerson[i].Picture}'>Ventana</a>
             </div>
@@ -354,7 +354,7 @@ class videoSystemView {
             productionsRow.appendChild(productionsColumn);
         }
 
-        this.windows.push(window);
+        this.windows.set(person.Picture,window);
     }
 
     showProductionCard(production, actors, directors) {
@@ -408,7 +408,7 @@ class videoSystemView {
             actorsColumn.innerHTML = `<div class="card mx-auto" style="width: 18rem; margin-top:2rem;">
             <img src='./media/personas/${arrayActors[i].Picture}' class="card-img-top" alt="${arrayActors[i].Picture}" width=200 height=200/>
             <div class="card-body">
-              <h5 class="card-title">${arrayActors[i].Name} ${arrayActors[i].FirstLastName}</h5>
+              <h5 class="card-title"><p>Actor</p>${arrayActors[i].Name} ${arrayActors[i].FirstLastName}</h5>
               <a href="#ActoresCard" class="btn btn-primary person-Actores" data-person='${arrayActors[i].Picture}'>Conocer</a>
               <a href="#ActoresCard" class="btn btn-primary person-Actores-window" data-person='${arrayActors[i].Picture}'>Ventana</a>
             </div>
@@ -421,7 +421,7 @@ class videoSystemView {
             directorsColumn.innerHTML = `<div class="card mx-auto" style="width: 18rem;  margin-top:2rem;">
             <img src='./media/personas/${arrayDirectors[i].Picture}' class="card-img-top" alt="${arrayDirectors[i].Picture}" width=200 height=200/>
             <div class="card-body">
-              <h5 class="card-title">${arrayDirectors[i].Name} ${arrayDirectors[i].FirstLastName}</h5>
+              <h5 class="card-title"><p>Director</p>${arrayDirectors[i].Name} ${arrayDirectors[i].FirstLastName}</h5>
               <a href="#DirectoresCard" class="btn btn-primary person-Directores" data-person='${arrayDirectors[i].Picture}'>Conocer</a>
               <a href="#DirectoresCard" class="btn btn-primary person-Directores-window" data-person='${arrayDirectors[i].Picture}'>Ventana</a>
             </div>
@@ -484,7 +484,7 @@ class videoSystemView {
             actorsColumn.innerHTML = `<div class="card mx-auto" style="width: 18rem; margin-top:2rem;">
             <img src='./media/personas/${arrayActors[i].Picture}' class="card-img-top" alt="${arrayActors[i].Picture}" width=200 height=200/>
             <div class="card-body">
-              <h5 class="card-title">${arrayActors[i].Name} ${arrayActors[i].FirstLastName}</h5>
+              <h5 class="card-title"><p>Actor</p>${arrayActors[i].Name} ${arrayActors[i].FirstLastName}</h5>
               </div>
               </div>`
             //   <a href="#ActoresCard" class="btn btn-primary person-Actores" data-person='${arrayActors[i].Picture}'>Conocer</a>
@@ -497,7 +497,7 @@ class videoSystemView {
             directorsColumn.innerHTML = `<div class="card mx-auto" style="width: 18rem;  margin-top:2rem;">
             <img src='./media/personas/${arrayDirectors[i].Picture}' class="card-img-top" alt="${arrayDirectors[i].Picture}" width=200 height=200/>
             <div class="card-body">
-              <h5 class="card-title">${arrayDirectors[i].Name} ${arrayDirectors[i].FirstLastName}</h5>
+              <h5 class="card-title"><p>Director</p> ${arrayDirectors[i].Name} ${arrayDirectors[i].FirstLastName}</h5>
               </div>
               </div>`
             //   <a href="#DirectoresCard" class="btn btn-primary person-Directores" data-person='${arrayDirectors[i].Picture}'>Conocer</a>
@@ -505,17 +505,18 @@ class videoSystemView {
               CastRow.appendChild(directorsColumn);
         }
 
-        this.windows.push(window);
+        console.log(production.Title);
+        this.windows.set(production.Title,window);
     }
 
     closeAllWindows(){
-        this.windows.forEach(element => {
-            if (!element.closed) {
-                element.close();
+        for (let window of this.windows.values()) {
+            if (!window.closed) {
+                window.close();
             }
-        });
+        }
 
-        this.windows=[];
+        this.windows=new Map();
     }
 
     bindInit(handler) {

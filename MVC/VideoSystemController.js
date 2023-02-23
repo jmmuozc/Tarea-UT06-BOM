@@ -318,18 +318,32 @@ class videoSystemController {
     }
 
     onClickDirectorCardWindow = (picture) => {
-        let windowDirector = window.open("window.html", picture, "width=800, height=1000, top=0, left=0, titlebar=yes, toolbar=no, menubar=no, location=no");
-        windowDirector.addEventListener('DOMContentLoaded', () => {
-            this.#videoSystemView.showPersonWindow(this.#videoSystemModel.getPersonByPicture(picture), this.#videoSystemModel.getProductionsDirector(this.#videoSystemModel.getPersonByPicture(picture)), windowDirector);
-        });
+        let windowDirector = this.#videoSystemView.windows.get(picture);
 
+        if (!windowDirector || windowDirector.closed) {
+
+            windowDirector = window.open("window.html", picture, "width=800, height=1000, top=0, left=0, titlebar=yes, toolbar=no, menubar=no, location=no");
+            windowDirector.addEventListener('DOMContentLoaded', () => {
+                this.#videoSystemView.showPersonWindow(this.#videoSystemModel.getPersonByPicture(picture), this.#videoSystemModel.getProductionsDirector(this.#videoSystemModel.getPersonByPicture(picture)), windowDirector);
+            });
+        } else {
+            windowDirector.focus();
+
+        }
     }
 
     onClickActorCardWindow = (picture) => {
-        let windowActor = window.open("window.html", picture, "width=800, height=1000, top=0, left=0, titlebar=yes, toolbar=no, menubar=no, location=no");
-        windowActor.addEventListener('DOMContentLoaded', () => {
-            this.#videoSystemView.showPersonWindow(this.#videoSystemModel.getPersonByPicture(picture), this.#videoSystemModel.getProductionsActor(this.#videoSystemModel.getPersonByPicture(picture)), windowActor);
-        });
+        let windowActor = this.#videoSystemView.windows.get(picture);
+        if (!windowActor || windowActor.closed) {
+
+            windowActor = window.open("window.html", picture, "width=800, height=1000, top=0, left=0, titlebar=yes, toolbar=no, menubar=no, location=no");
+            windowActor.addEventListener('DOMContentLoaded', () => {
+                this.#videoSystemView.showPersonWindow(this.#videoSystemModel.getPersonByPicture(picture), this.#videoSystemModel.getProductionsActor(this.#videoSystemModel.getPersonByPicture(picture)), windowActor);
+            });
+        } else {
+            windowActor.focus();
+
+        }
     }
 
     onClickDirectorCard = (picture) => {
@@ -342,11 +356,17 @@ class videoSystemController {
     }
 
     onClickProductionCardWindow = (title) => {
-        let windowProduction = window.open("window.html", title, "width=1500, height=1000, top=0, left=0, titlebar=yes, toolbar=no, menubar=no, location=no");
-        windowProduction.addEventListener('DOMContentLoaded', () => {
-            this.#videoSystemView.showProductionCardWindow(this.#videoSystemModel.getProductionByTitle(title), this.#videoSystemModel.getCast(this.#videoSystemModel.getProductionByTitle(title)),
-                this.#videoSystemModel.getDirector(this.#videoSystemModel.getProductionByTitle(title)), windowProduction);
-        });
+        let windowProduction = this.#videoSystemView.windows.get(title);
+
+        if (!windowProduction || windowProduction.closed) {
+            windowProduction = window.open("window.html", title, "width=1500, height=1000, top=0, left=0, titlebar=yes, toolbar=no, menubar=no, location=no");
+            windowProduction.addEventListener('DOMContentLoaded', () => {
+                this.#videoSystemView.showProductionCardWindow(this.#videoSystemModel.getProductionByTitle(title), this.#videoSystemModel.getCast(this.#videoSystemModel.getProductionByTitle(title)),
+                    this.#videoSystemModel.getDirector(this.#videoSystemModel.getProductionByTitle(title)), windowProduction);
+            });
+        } else {
+            windowProduction.focus();
+        }
 
     }
 }
