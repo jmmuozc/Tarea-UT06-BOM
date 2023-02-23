@@ -1,6 +1,8 @@
 "use strict";
 class videoSystemView {
 
+    windows=[];
+
     constructor() {
         // Recogemos el main
         this.main = document.getElementsByTagName("main")[0];
@@ -108,6 +110,7 @@ class videoSystemView {
             <div class="card-body">
               <h5 class="card-title">${arrayProductions[rng].Title}</h5>
               <a href="#ProductionCard" class="btn btn-primary production-btn" data-production='${arrayProductions[rng].Title}'>Ver</a>
+              <a href="#ProductionCard" class="btn btn-primary production-btn-window" data-production='${arrayProductions[rng].Title}'>Ventana</a>
             </div>
           </div>`
 
@@ -147,6 +150,7 @@ class videoSystemView {
             <div class="card-body">
               <h5 class="card-title">${arrayProductions[i].Title}</h5>
               <a href="#ProductionCard" class="btn btn-primary production-btn" data-production='${arrayProductions[i].Title}'>Ver</a>
+              <a href="#ProductionCard" class="btn btn-primary production-btn-window" data-production='${arrayProductions[i].Title}'>Ventana</a>
             </div>
           </div>`
             productionsRow.appendChild(productionsColumn);
@@ -185,6 +189,7 @@ class videoSystemView {
             <div class="card-body">
               <h5 class="card-title">${arrayProductions[i].Title}</h5>
               <a href="#ProductionCard" class="btn btn-primary production-btn" data-production='${arrayProductions[i].Title}'>Ver</a>
+              <a href="#ProductionCard" class="btn btn-primary production-btn-window" data-production='${arrayProductions[i].Title}'>Ventana</a>
             </div>
           </div>`
             productionRow.appendChild(productionColumn);
@@ -224,6 +229,7 @@ class videoSystemView {
             <div class="card-body">
             <h5 class="card-title">${arrayPerson[i].Name} ${arrayPerson[i].FirstLastName}</h5>
             <a href="#${type}card" class="btn btn-primary person-${type}" data-person='${arrayPerson[i].Picture}'>Conocer</a>
+            <a href="#${type}card" class="btn btn-primary person-${type}-window" data-person='${arrayPerson[i].Picture}'>Ventana</a>
             </div>
           </div>`
             personRow.appendChild(personColumn);
@@ -281,12 +287,74 @@ class videoSystemView {
             <div class="card-body">
               <h5 class="card-title">${arrayProductions[i].Title}</h5>
               <a href="#ProductionCard" class="btn btn-primary production-btn" data-production='${arrayProductions[i].Title}'>Ver</a>
+              <a href="#ProductionCard" class="btn btn-primary production-btn-window" data-production='${arrayProductions[i].Title}'>Ventana</a>
             </div>
           </div>`
             productionsRow.appendChild(productionsColumn);
         }
 
 
+    }
+
+    showPersonWindow(person, productionsList,window) {
+        let main=window.document.getElementsByTagName("main")[0];
+        if (window.document.getElementById("div-categories")) main.removeChild(window.document.getElementById("div-categories"));
+        if (window.document.getElementById("div-Contents")) main.removeChild(window.document.getElementById("div-Contents"));
+
+        let personContainer = window.document.createElement("div");
+        let arrayProductions = [];
+        // Le añadimos una clase (container)
+        personContainer.classList.add("container");
+        personContainer.classList.add("text-center");
+        personContainer.classList.add("row");
+        personContainer.setAttribute("Id", "div-Contents");
+        personContainer.setAttribute("style", "margin:auto; margin-top:4rem");
+
+        main.appendChild(personContainer);
+        personContainer.innerHTML = `
+        <div class="col">
+        <img src='./media/personas/${person.Picture}' class="card-img-top" alt="${person.Picture}" width=200 height=500/>
+        </div>`
+            ;
+
+        let productionContainer = window.document.createElement("div");
+        // Le añadimos una clase (container)
+        productionContainer.classList.add("container");
+        productionContainer.classList.add("text-center");
+        productionContainer.classList.add("col");
+
+        for (let production of productionsList) {
+            arrayProductions.push(production);
+        }
+
+        productionContainer.innerHTML = `<h4>${person.Name} ${person.FirstLastName}</h4>
+        <h2>${person.Born.toISOString().split("T")[0]}</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean aliquam tempor tempor. Vivamus libero mi, cursus id ullamcorper vitae, commodo nec erat. Proin iaculis odio sit amet quam aliquet, et rhoncus mi dignissim. Vestibulum sed justo nec diam mollis finibus elementum et felis. Sed lobortis risus ac tellus auctor ullamcorper.</p>`;
+
+
+        // No se mete junto con el inner html
+        personContainer.appendChild(productionContainer);
+
+        let productionsRow = window.document.createElement("div");
+        productionsRow.classList.add("row");
+        productionsRow.innerHTML = "<h2>Producciones</h2>";
+        productionContainer.appendChild(productionsRow);
+
+        for (let i = 0; i < arrayProductions.length; i++) {
+            let productionsColumn = window.document.createElement("div");
+            productionsColumn.classList.add("col");
+            productionsColumn.innerHTML = `<div class="card mx-auto" style="width: 18rem; margin-top:2rem;">
+            <img src='./media/producciones/${arrayProductions[i].Image}' class="card-img-top" alt="${arrayProductions[i].Image}" width=250 height=150/>
+            <div class="card-body">
+              <h5 class="card-title">${arrayProductions[i].Title}</h5>
+              <a href="#ProductionCard" class="btn btn-primary production-btn" data-production='${arrayProductions[i].Title}'>Ver</a>
+              <a href="#ProductionCard" class="btn btn-primary production-btn-window" data-production='${arrayProductions[i].Title}'>Ventana</a>
+            </div>
+          </div>`
+            productionsRow.appendChild(productionsColumn);
+        }
+
+        this.windows.push(window);
     }
 
     showProductionCard(production, actors, directors) {
@@ -342,6 +410,7 @@ class videoSystemView {
             <div class="card-body">
               <h5 class="card-title">${arrayActors[i].Name} ${arrayActors[i].FirstLastName}</h5>
               <a href="#ActoresCard" class="btn btn-primary person-Actores" data-person='${arrayActors[i].Picture}'>Conocer</a>
+              <a href="#ActoresCard" class="btn btn-primary person-Actores-window" data-person='${arrayActors[i].Picture}'>Ventana</a>
             </div>
           </div>`
             CastRow.appendChild(actorsColumn);
@@ -354,12 +423,89 @@ class videoSystemView {
             <div class="card-body">
               <h5 class="card-title">${arrayDirectors[i].Name} ${arrayDirectors[i].FirstLastName}</h5>
               <a href="#DirectoresCard" class="btn btn-primary person-Directores" data-person='${arrayDirectors[i].Picture}'>Conocer</a>
+              <a href="#DirectoresCard" class="btn btn-primary person-Directores-window" data-person='${arrayDirectors[i].Picture}'>Ventana</a>
             </div>
           </div>`
             CastRow.appendChild(directorsColumn);
         }
 
 
+    }
+
+    showProductionCardWindow(production, actors, directors,window) {
+        let main=window.document.getElementsByTagName("main")[0];
+        if (window.document.getElementById("div-categories")) main.removeChild(window.document.getElementById("div-categories"));
+        if (window.document.getElementById("div-Contents")) main.removeChild(window.document.getElementById("div-Contents"));
+
+        let productionContainer = window.document.createElement("div");
+        let arrayActors = [];
+        let arrayDirectors = [];
+        // Le añadimos una clase (container)
+        productionContainer.classList.add("container");
+        productionContainer.classList.add("text-center");
+        productionContainer.classList.add("row");
+        productionContainer.setAttribute("Id", "div-Contents");
+        productionContainer.setAttribute("style", "margin:auto; margin-top:4rem");
+        main.appendChild(productionContainer);
+        productionContainer.innerHTML = `
+        <div class="col">
+        <img src='./media/producciones/${production.Image}' class="card-img-top" alt="${production.Image}" width=200 height=500/>
+        </div>`;
+
+
+        let productionInfoContainer = window.document.createElement("div");
+        // Le añadimos una clase (container)
+        productionInfoContainer.classList.add("container");
+        productionInfoContainer.classList.add("text-center");
+        productionInfoContainer.classList.add("col");
+
+        productionInfoContainer.innerHTML = `<h4>${production.Title}</h4>
+        <h2>${production.Publication.toISOString().split("T")[0]}</h2>
+        <p>${production.Synopsis}</p>`;
+
+        productionContainer.appendChild(productionInfoContainer);
+
+        for (let actor of actors) {
+            arrayActors.push(actor.actor);
+        }
+
+        for (let director of directors) {
+            arrayDirectors.push(director.director);
+        }
+
+        let CastRow = window.document.createElement("div");
+        CastRow.classList.add("row");
+        CastRow.innerHTML = "<h2>Reparto</h2>";
+        productionInfoContainer.appendChild(CastRow);
+
+        for (let i = 0; i < arrayActors.length; i++) {
+            let actorsColumn = window.document.createElement("div");
+            actorsColumn.classList.add("col");
+            actorsColumn.innerHTML = `<div class="card mx-auto" style="width: 18rem; margin-top:2rem;">
+            <img src='./media/personas/${arrayActors[i].Picture}' class="card-img-top" alt="${arrayActors[i].Picture}" width=200 height=200/>
+            <div class="card-body">
+              <h5 class="card-title">${arrayActors[i].Name} ${arrayActors[i].FirstLastName}</h5>
+              <a href="#ActoresCard" class="btn btn-primary person-Actores" data-person='${arrayActors[i].Picture}'>Conocer</a>
+              <a href="#ActoresCard" class="btn btn-primary person-Actores-window" data-person='${arrayActors[i].Picture}'>Ventana</a>
+            </div>
+          </div>`
+            CastRow.appendChild(actorsColumn);
+        }
+        for (let i = 0; i < arrayDirectors.length; i++) {
+            let directorsColumn = window.document.createElement("div");
+            directorsColumn.classList.add("col");
+            directorsColumn.innerHTML = `<div class="card mx-auto" style="width: 18rem;  margin-top:2rem;">
+            <img src='./media/personas/${arrayDirectors[i].Picture}' class="card-img-top" alt="${arrayDirectors[i].Picture}" width=200 height=200/>
+            <div class="card-body">
+              <h5 class="card-title">${arrayDirectors[i].Name} ${arrayDirectors[i].FirstLastName}</h5>
+              <a href="#DirectoresCard" class="btn btn-primary person-Directores" data-person='${arrayDirectors[i].Picture}'>Conocer</a>
+              <a href="#DirectoresCard" class="btn btn-primary person-Directores-window" data-person='${arrayDirectors[i].Picture}'>Ventana</a>
+            </div>
+          </div>`
+            CastRow.appendChild(directorsColumn);
+        }
+
+        this.windows.push(window);
     }
 
     bindInit(handler) {
@@ -429,11 +575,39 @@ class videoSystemView {
         }
     }
     
+    bindActorCardWindow(handler) {
+        for (let element of document.getElementsByClassName('person-Actores-window')) {
+            element.addEventListener("click", (event) => {
+                handler(element.dataset.person);
+            });
+            
+        }
+    }
+    
+    bindDirectorCardWindow(handler) {
+        for (let element of document.getElementsByClassName('person-Directores-window')) {
+            element.addEventListener("click", (event) => {
+                handler(element.dataset.person);
+            });
+            
+        }
+    }
+    
     
     bindProductionCard(handler) {
         for (let element of document.getElementsByClassName('production-btn')) {
             element.addEventListener("click", (event) => {
                 this.#excecuteHandler(handler,element.dataset.production,'body',{action:'showProduction',title:element.dataset.production},'#ProductionCard',event);
+            });
+            
+        }
+    }
+    
+    
+    bindProductionCardWindow(handler) {
+        for (let element of document.getElementsByClassName('production-btn-window')) {
+            element.addEventListener("click", (event) => {
+                handler(element.dataset.production);
             });
             
         }
