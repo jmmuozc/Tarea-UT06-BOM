@@ -194,6 +194,8 @@ class videoSystemController {
         this.#videoSystemView.rngProductions(this.#videoSystemModel.Productions);
         this.#videoSystemView.headerCategories(this.#videoSystemModel.CategoriesList);
 
+
+        this.#videoSystemView.bindWindow(this.handleCloseWindows);
         this.#videoSystemView.bindCategory(this.handleCategory);
         this.#videoSystemView.bindSeries(this.handleSeries);
         this.#videoSystemView.bindMovies(this.handleMovies);
@@ -205,6 +207,10 @@ class videoSystemController {
 
     handleInit = () => {
         this.onInit();
+    }
+
+    handleCloseWindows = () => {
+        this.onClickClosewindows();
     }
 
     handleCategory = (name) => {
@@ -256,15 +262,15 @@ class videoSystemController {
 
     handleActorCardWindow = (picture) => {
         this.onClickActorCardWindow(picture);
-        this.#videoSystemView.bindProductionCard(this.HandleProduction);
-        this.#videoSystemView.bindProductionCardWindow(this.HandleProductionWindow);
+        // this.#videoSystemView.bindProductionCard(this.HandleProduction);
+        // this.#videoSystemView.bindProductionCardWindow(this.HandleProductionWindow);
 
     }
 
     handleDirectorCardWindow = (picture) => {
         this.onClickDirectorCardWindow(picture);
-        this.#videoSystemView.bindProductionCard(this.HandleProduction);
-        this.#videoSystemView.bindProductionCardWindow(this.HandleProductionWindow);
+        // this.#videoSystemView.bindProductionCard(this.HandleProduction);
+        // this.#videoSystemView.bindProductionCardWindow(this.HandleProductionWindow);
     }
 
     HandleProduction = (title) => {
@@ -277,12 +283,16 @@ class videoSystemController {
 
     HandleProductionWindow = (title) => {
         this.onClickProductionCardWindow(title);
-        this.#videoSystemView.bindActorCard(this.handleActorCard);
-        this.#videoSystemView.bindActorCardWindow(this.handleActorCardWindow);
-        this.#videoSystemView.bindDirectorCard(this.handleDirectorCard);
-        this.#videoSystemView.bindDirectorCardWindow(this.handleDirectorCardWindow);
+        // this.#videoSystemView.bindActorCard(this.handleActorCard);
+        // this.#videoSystemView.bindActorCardWindow(this.handleActorCardWindow);
+        // this.#videoSystemView.bindDirectorCard(this.handleDirectorCard);
+        // this.#videoSystemView.bindDirectorCardWindow(this.handleDirectorCardWindow);
     }
 
+
+    onClickClosewindows = () => {
+        this.#videoSystemView.closeAllWindows();
+    }
 
     onClickCategory = (name) => {
         this.#videoSystemView.showCategoriesProductions(this.#videoSystemModel.getProductionsCategory(this.#videoSystemModel.getCategoryByName(name)), name);

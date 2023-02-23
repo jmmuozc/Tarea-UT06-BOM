@@ -508,6 +508,16 @@ class videoSystemView {
         this.windows.push(window);
     }
 
+    closeAllWindows(){
+        this.windows.forEach(element => {
+            if (!element.closed) {
+                element.close();
+            }
+        });
+
+        this.windows=[];
+    }
+
     bindInit(handler) {
         for (let element of document.getElementsByClassName('init')) {
             element.addEventListener("click", (event) => {
@@ -618,6 +628,16 @@ class videoSystemView {
             
             element.addEventListener("click", (event) => {
                 this.#excecuteHandler(handler,element.dataset.category,'body',{action:'showCategory', category:element.dataset.category},'#Category',event);
+            });
+
+        }
+    }
+    
+    bindWindow(handler) {
+        for (let element of document.getElementsByClassName('close-windows')) {
+            
+            element.addEventListener("click", (event) => {
+               handler()
             });
 
         }
