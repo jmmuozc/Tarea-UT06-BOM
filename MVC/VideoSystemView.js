@@ -1,4 +1,7 @@
 "use strict";
+
+import Production from "../js/Production.js";
+
 class videoSystemView {
 
     windows=new Map();
@@ -110,7 +113,7 @@ class videoSystemView {
             <div class="card-body">
               <h5 class="card-title">${arrayProductions[rng].Title}</h5>
               <a href="#ProductionCard" class="btn btn-primary production-btn" data-production='${arrayProductions[rng].Title}'>Ver</a>
-              <a href="#ProductionCard" class="btn btn-primary production-btn-window" data-production='${arrayProductions[rng].Title}'>Ventana</a>
+              <button class="btn btn-primary production-btn-window" data-production='${arrayProductions[rng].Title}'>Ventana</button>
             </div>
           </div>`
 
@@ -150,7 +153,7 @@ class videoSystemView {
             <div class="card-body">
               <h5 class="card-title">${arrayProductions[i].Title}</h5>
               <a href="#ProductionCard" class="btn btn-primary production-btn" data-production='${arrayProductions[i].Title}'>Ver</a>
-              <a href="#ProductionCard" class="btn btn-primary production-btn-window" data-production='${arrayProductions[i].Title}'>Ventana</a>
+              <button class="btn btn-primary production-btn-window" data-production='${arrayProductions[i].Title}'>Ventana</button>
             </div>
           </div>`
             productionsRow.appendChild(productionsColumn);
@@ -189,7 +192,7 @@ class videoSystemView {
             <div class="card-body">
               <h5 class="card-title">${arrayProductions[i].Title}</h5>
               <a href="#ProductionCard" class="btn btn-primary production-btn" data-production='${arrayProductions[i].Title}'>Ver</a>
-              <a href="#ProductionCard" class="btn btn-primary production-btn-window" data-production='${arrayProductions[i].Title}'>Ventana</a>
+              <button class="btn btn-primary production-btn-window" data-production='${arrayProductions[i].Title}'>Ventana</button>
             </div>
           </div>`
             productionRow.appendChild(productionColumn);
@@ -229,7 +232,7 @@ class videoSystemView {
             <div class="card-body">
             <h5 class="card-title"><p>${type}</p>${arrayPerson[i].Name} ${arrayPerson[i].FirstLastName}</h5>
             <a href="#${type}card" class="btn btn-primary person-${type}" data-person='${arrayPerson[i].Picture}'>Conocer</a>
-            <a href="#${type}card" class="btn btn-primary person-${type}-window" data-person='${arrayPerson[i].Picture}'>Ventana</a>
+            <button class="btn btn-primary person-${type}-window" data-person='${arrayPerson[i].Picture}'>Ventana</button>
             </div>
           </div>`
             personRow.appendChild(personColumn);
@@ -287,7 +290,7 @@ class videoSystemView {
             <div class="card-body">
               <h5 class="card-title">${arrayProductions[i].Title}</h5>
               <a href="#ProductionCard" class="btn btn-primary production-btn" data-production='${arrayProductions[i].Title}'>Ver</a>
-              <a href="#ProductionCard" class="btn btn-primary production-btn-window" data-production='${arrayProductions[i].Title}'>Ventana</a>
+              <button class="btn btn-primary production-btn-window" data-production='${arrayProductions[i].Title}'>Ventana</button>
             </div>
           </div>`
             productionsRow.appendChild(productionsColumn);
@@ -410,7 +413,7 @@ class videoSystemView {
             <div class="card-body">
               <h5 class="card-title"><p>Actor</p>${arrayActors[i].Name} ${arrayActors[i].FirstLastName}</h5>
               <a href="#ActoresCard" class="btn btn-primary person-Actores" data-person='${arrayActors[i].Picture}'>Conocer</a>
-              <a href="#ActoresCard" class="btn btn-primary person-Actores-window" data-person='${arrayActors[i].Picture}'>Ventana</a>
+              <button class="btn btn-primary person-Actores-window" data-person='${arrayActors[i].Picture}'>Ventana</button>
             </div>
           </div>`
             CastRow.appendChild(actorsColumn);
@@ -423,7 +426,7 @@ class videoSystemView {
             <div class="card-body">
               <h5 class="card-title"><p>Director</p>${arrayDirectors[i].Name} ${arrayDirectors[i].FirstLastName}</h5>
               <a href="#DirectoresCard" class="btn btn-primary person-Directores" data-person='${arrayDirectors[i].Picture}'>Conocer</a>
-              <a href="#DirectoresCard" class="btn btn-primary person-Directores-window" data-person='${arrayDirectors[i].Picture}'>Ventana</a>
+              <button class="btn btn-primary person-Directores-window" data-person='${arrayDirectors[i].Picture}'>Ventana</button>
             </div>
           </div>`
             CastRow.appendChild(directorsColumn);
@@ -432,6 +435,13 @@ class videoSystemView {
 
     }
 
+    /**
+     * Muestra la carta en una ventana nueva
+     * @param {Production} production 
+     * @param {Person} actors 
+     * @param {Person} directors 
+     * @param {Window} window 
+     */
     showProductionCardWindow(production, actors, directors,window) {
         let main=window.document.getElementsByTagName("main")[0];
         if (window.document.getElementById("div-categories")) main.removeChild(window.document.getElementById("div-categories"));
@@ -508,6 +518,9 @@ class videoSystemView {
         this.windows.set(production.Title,window);
     }
 
+    /**
+     * Cierra todas las ventanas
+     */
     closeAllWindows(){
         for (let window of this.windows.values()) {
             if (!window.closed) {
