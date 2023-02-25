@@ -4,21 +4,33 @@ import Production from "../js/Production.js";
 
 class videoSystemView {
 
-    windows=new Map();
+    windows = new Map();
 
     constructor() {
         // Recogemos el main
         this.main = document.getElementsByTagName("main")[0];
     }
 
-    #excecuteHandler(handler, handlerArguments, scrollElement, data, url, event){
-		handler(handlerArguments);
-		$(scrollElement).get(0).scrollIntoView();
-		history.pushState(data, null, url);
-		event.preventDefault();
-	}
+    /**
+     * Metodo que realiza el guardado dentro del history
+     * @param {Function} handler 
+     * @param {*} handlerArguments 
+     * @param {*} scrollElement 
+     * @param {*} data 
+     * @param {*} url 
+     * @param {*} event 
+     */
+    #excecuteHandler(handler, handlerArguments, scrollElement, data, url, event) {
+        handler(handlerArguments);
+        $(scrollElement).get(0).scrollIntoView();
+        history.pushState(data, null, url);
+        event.preventDefault();
+    }
 
-
+    /**
+     * Crea un elemento div con cada una de las categorias de la lista introducida
+     * @param {Category} categoriesList 
+     */
     showCategories(categoriesList) {
 
 
@@ -49,6 +61,10 @@ class videoSystemView {
         }
     }
 
+    /**
+     * Introduce en el header una lista desordenada con las respectivas categorias dentro de la lista
+     * @param {Category} categoriesList 
+     */
     headerCategories(categoriesList) {
         let nav = document.getElementById("navbarUl");
         if (document.getElementById("nav-categories")) nav.removeChild(document.getElementById("nav-categories"));
@@ -74,6 +90,10 @@ class videoSystemView {
         }
     }
 
+    /**
+     * Muestra en div una categoria aleatoria, hasta un número de 3 veces
+     * @param {Production} productionsList 
+     */
     rngProductions(productionsList) {
 
         if (document.getElementById("div-Contents")) this.main.removeChild(document.getElementById("div-Contents"));
@@ -121,6 +141,11 @@ class videoSystemView {
         }
     }
 
+    /**
+     * Crea cartas de las producciones con Bootstrap de la categoria introducida y muestra el nombre de la categoria 
+     * @param {Category} category 
+     * @param {String} name 
+     */
     showCategoriesProductions(category, name) {
 
         let arrayProductions = [];
@@ -160,6 +185,11 @@ class videoSystemView {
         }
     }
 
+    /**
+     * Muestra una lista de cartas de producciones, muestra si es una serie o pelicula depende del tipo
+     * @param {Production} productionList 
+     * @param {String} type 
+     */
     showProductions(productionList, type) {
 
         let arrayProductions = [];
@@ -199,7 +229,11 @@ class videoSystemView {
         }
     }
 
-
+    /**
+     * Muestra una lista de cartas de Personas, muestra si es un actor o director depende del tipo
+     * @param {Person} personList 
+     * @param {String} type 
+     */
     showPersonsList(personList, type) {
 
         let arrayPerson = [];
@@ -239,6 +273,11 @@ class videoSystemView {
         }
     }
 
+    /**
+     * Crea un div de cartas de las producciones en las que está la persona introducida
+     * @param {Person} person 
+     * @param {Production} productionsList 
+     */
     showPerson(person, productionsList) {
         if (document.getElementById("div-categories")) this.main.removeChild(document.getElementById("div-categories"));
         if (document.getElementById("div-Contents")) this.main.removeChild(document.getElementById("div-Contents"));
@@ -299,8 +338,13 @@ class videoSystemView {
 
     }
 
-    showPersonWindow(person, productionsList,window) {
-        let main=window.document.getElementsByTagName("main")[0];
+    /**
+     * Crea un div de cartas de las producciones en las que está la persona introducida en una ventana
+     * @param {Person} person 
+     * @param {Production} productionsList 
+     */
+    showPersonWindow(person, productionsList, window) {
+        let main = window.document.getElementsByTagName("main")[0];
         if (window.document.getElementById("div-categories")) main.removeChild(window.document.getElementById("div-categories"));
         if (window.document.getElementById("div-Contents")) main.removeChild(window.document.getElementById("div-Contents"));
 
@@ -352,14 +396,20 @@ class videoSystemView {
               <h5 class="card-title">${arrayProductions[i].Title}</h5>
               </div>
               </div>`
-              //   <a href="#ProductionCard" class="btn btn-primary production-btn" data-production='${arrayProductions[i].Title}'>Ver</a>
-              //   <a href="#ProductionCard" class="btn btn-primary production-btn-window" data-production='${arrayProductions[i].Title}'>Ventana</a>
+            //   <a href="#ProductionCard" class="btn btn-primary production-btn" data-production='${arrayProductions[i].Title}'>Ver</a>
+            //   <a href="#ProductionCard" class="btn btn-primary production-btn-window" data-production='${arrayProductions[i].Title}'>Ventana</a>
             productionsRow.appendChild(productionsColumn);
         }
 
-        this.windows.set(person.Picture,window);
+        this.windows.set(person.Picture, window);
     }
 
+    /**
+     * Muestra un div de la producción introducida y añade los actores y directores participantes
+     * @param {Production} production 
+     * @param {Person} actors 
+     * @param {Person} directors 
+     */
     showProductionCard(production, actors, directors) {
         if (document.getElementById("div-categories")) this.main.removeChild(document.getElementById("div-categories"));
         if (document.getElementById("div-Contents")) this.main.removeChild(document.getElementById("div-Contents"));
@@ -442,8 +492,8 @@ class videoSystemView {
      * @param {Person} directors 
      * @param {Window} window 
      */
-    showProductionCardWindow(production, actors, directors,window) {
-        let main=window.document.getElementsByTagName("main")[0];
+    showProductionCardWindow(production, actors, directors, window) {
+        let main = window.document.getElementsByTagName("main")[0];
         if (window.document.getElementById("div-categories")) main.removeChild(window.document.getElementById("div-categories"));
         if (window.document.getElementById("div-Contents")) main.removeChild(window.document.getElementById("div-Contents"));
 
@@ -512,145 +562,193 @@ class videoSystemView {
               </div>`
             //   <a href="#DirectoresCard" class="btn btn-primary person-Directores" data-person='${arrayDirectors[i].Picture}'>Conocer</a>
             //   <a href="#DirectoresCard" class="btn btn-primary person-Directores-window" data-person='${arrayDirectors[i].Picture}'>Ventana</a>
-              CastRow.appendChild(directorsColumn);
+            CastRow.appendChild(directorsColumn);
         }
 
-        this.windows.set(production.Title,window);
+        this.windows.set(production.Title, window);
     }
 
     /**
      * Cierra todas las ventanas
      */
-    closeAllWindows(){
+    closeAllWindows() {
         for (let window of this.windows.values()) {
             if (!window.closed) {
                 window.close();
             }
         }
 
-        this.windows=new Map();
+        this.windows = new Map();
     }
 
+    /**
+    * Funcion que añade un evento a los elementos con la clase init
+    * @param {Function} handler 
+    */
     bindInit(handler) {
         for (let element of document.getElementsByClassName('init')) {
             element.addEventListener("click", (event) => {
-              this.#excecuteHandler(handler,[],'body',{action:'init'},'#Inicio',event);
-              // handler();
+                this.#excecuteHandler(handler, [], 'body', { action: 'init' }, '#Inicio', event);
+                // handler();
             });
-            
+
         }
     }
-    
+
+    /**
+    * Funcion que añade un evento a los elementos con la clase serie
+    * @param {Function} handler 
+    */
     bindSeries(handler) {
         for (let element of document.getElementsByClassName('series')) {
             element.addEventListener("click", (event) => {
-                this.#excecuteHandler(handler,[],'body',{action:'showSeries'},'#Series',event);
+                this.#excecuteHandler(handler, [], 'body', { action: 'showSeries' }, '#Series', event);
             });
-            
+
         }
     }
-    
+
+    /**
+    * Funcion que añade un evento a los elementos con la clase movies
+    * @param {Function} handler 
+    */
     bindMovies(handler) {
         for (let element of document.getElementsByClassName('movies')) {
             element.addEventListener("click", (event) => {
-                this.#excecuteHandler(handler,[],'body',{action:'showMovies'},'#Movies',event);
+                this.#excecuteHandler(handler, [], 'body', { action: 'showMovies' }, '#Movies', event);
             });
-            
+
         }
     }
-    
+
+    /**
+    * Funcion que añade un evento a los elementos con la clase actors
+    * @param {Function} handler 
+    */
     bindActors(handler) {
         for (let element of document.getElementsByClassName('actors')) {
             element.addEventListener("click", (event) => {
-                this.#excecuteHandler(handler,[],'body',{action:'showActors'},'#Actores',event);
+                this.#excecuteHandler(handler, [], 'body', { action: 'showActors' }, '#Actores', event);
             });
-            
+
         }
     }
-    
-    
+
+    /**
+     * Funcion que añade un evento a los elementos con la clase person-Directores-window
+     * @param {Function} handler 
+     */
     bindDirectors(handler) {
         for (let element of document.getElementsByClassName('directors')) {
             element.addEventListener("click", (event) => {
-                this.#excecuteHandler(handler,[],'body',{action:'showDirectors'},'#Directores',event);
+                this.#excecuteHandler(handler, [], 'body', { action: 'showDirectors' }, '#Directores', event);
                 handler();
             });
-            
+
         }
     }
-    
-    
+
+    /**
+    * Funcion que añade un evento a los elementos con la clase person-Actores
+    * @param {Function} handler 
+    */
     bindActorCard(handler) {
         for (let element of document.getElementsByClassName('person-Actores')) {
             element.addEventListener("click", (event) => {
-                this.#excecuteHandler(handler,element.dataset.person,'body',{action:'showActorCard',picture:element.dataset.person},'#ActoresCard',event);
+                this.#excecuteHandler(handler, element.dataset.person, 'body', { action: 'showActorCard', picture: element.dataset.person }, '#ActoresCard', event);
             });
-            
+
         }
     }
-    
+
+    /**
+   * Funcion que añade un evento a los elementos con la clase person-Directores
+   * @param {Function} handler 
+   */
     bindDirectorCard(handler) {
         for (let element of document.getElementsByClassName('person-Directores')) {
             element.addEventListener("click", (event) => {
-                this.#excecuteHandler(handler,element.dataset.person,'body',{action:'showDirectorCard',picture:element.dataset.person},'#DirectoresCard',event);
+                this.#excecuteHandler(handler, element.dataset.person, 'body', { action: 'showDirectorCard', picture: element.dataset.person }, '#DirectoresCard', event);
             });
-            
+
         }
     }
-    
+
+    /**
+    * Funcion que añade un evento a los elementos con la clase person-Actores-window
+    * @param {Function} handler 
+    */
     bindActorCardWindow(handler) {
         for (let element of document.getElementsByClassName('person-Actores-window')) {
             element.addEventListener("click", (event) => {
                 handler(element.dataset.person);
             });
-            
+
         }
     }
-    
+
+    /**
+     * Funcion que añade un evento a los elementos con la clase person-Directores-window
+     * @param {Function} handler 
+     */
     bindDirectorCardWindow(handler) {
         for (let element of document.getElementsByClassName('person-Directores-window')) {
             element.addEventListener("click", (event) => {
                 handler(element.dataset.person);
             });
-            
+
         }
     }
-    
-    
+
+    /**
+      * Funcion que añade un evento a los elementos con la clase production-btn
+      * @param {Function} handler 
+      */
     bindProductionCard(handler) {
         for (let element of document.getElementsByClassName('production-btn')) {
             element.addEventListener("click", (event) => {
-                this.#excecuteHandler(handler,element.dataset.production,'body',{action:'showProduction',title:element.dataset.production},'#ProductionCard',event);
+                this.#excecuteHandler(handler, element.dataset.production, 'body', { action: 'showProduction', title: element.dataset.production }, '#ProductionCard', event);
             });
-            
+
         }
     }
-    
-    
+
+    /**
+     * Funcion que añade un evento a los elementos con la clase production-btn-window
+     * @param {Function} handler 
+     */
     bindProductionCardWindow(handler) {
         for (let element of document.getElementsByClassName('production-btn-window')) {
             element.addEventListener("click", (event) => {
                 handler(element.dataset.production);
             });
-            
+
         }
     }
-    
+
+    /**
+     * Funcion que añade un evento a los elementos con la clase category
+     * @param {Function} handler 
+     */
     bindCategory(handler) {
         for (let element of document.getElementsByClassName('category')) {
-            
+
             element.addEventListener("click", (event) => {
-                this.#excecuteHandler(handler,element.dataset.category,'body',{action:'showCategory', category:element.dataset.category},'#Category',event);
+                this.#excecuteHandler(handler, element.dataset.category, 'body', { action: 'showCategory', category: element.dataset.category }, '#Category', event);
             });
 
         }
     }
-    
+
+    /**
+     * Funcion que añade un evento a los elementos con la clase close Window
+     * @param {Function} handler 
+     */
     bindWindow(handler) {
         for (let element of document.getElementsByClassName('close-windows')) {
-            
+
             element.addEventListener("click", (event) => {
-               handler()
+                handler()
             });
 
         }
